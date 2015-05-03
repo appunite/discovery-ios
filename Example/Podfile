@@ -1,0 +1,18 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '7.0'
+inhibit_all_warnings!
+
+target 'Discovery', :exclusive => true do
+  pod "Discovery", :path => "../"
+  pod "AFNetworking"
+end
+
+target 'Tests', :exclusive => true do
+  pod "Discovery", :path => "../"
+
+  pod 'Specta'
+  pod 'Expecta'
+  pod 'OCMock'
+end
+
