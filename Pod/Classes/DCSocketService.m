@@ -58,7 +58,7 @@ NSString * const AUMessageTypeMetadataKey = @"metadata";
 #pragma mark Private
 
 - (void)sendMessage:(NSDictionary *)message {
-    if (!_webSocket) return;
+    if (_webSocket.readyState != SR_OPEN) return;
     
     // serialize to NSData object
     NSError *error = nil;
