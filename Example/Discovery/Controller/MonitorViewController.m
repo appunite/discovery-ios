@@ -53,6 +53,10 @@
     return cell;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [_users count];
+}
+
 #pragma mark - 
 #pragma mark DCSocketServiceDelegate
 
