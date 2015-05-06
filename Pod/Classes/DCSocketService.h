@@ -15,10 +15,12 @@
 #import "DCMessageSerializer.h"
 #import "DCMessageDeserializer.h"
 
-@class DCBluetoothMonitor;
+//Controllers
+#import "DCBluetoothMonitor.h"
+
 @protocol DCSocketServiceDelegate;
 
-@interface DCSocketService : NSObject <SRWebSocketDelegate>
+@interface DCSocketService : NSObject <SRWebSocketDelegate, DCBluetoothMonitorDelegate>
 @property (nonatomic, weak) id<DCSocketServiceDelegate> delegate;
 
 // serializers
@@ -28,14 +30,12 @@
 // web socket
 @property (nonatomic, strong, readonly) SRWebSocket *webSocket;
 
-// bluetooth controller
-@property (nonatomic, strong, readonly) DCBluetoothMonitor *centralManager;
-
-- (instancetype)initWithIdentityMonitor:(DCBluetoothMonitor *)monitor NS_DESIGNATED_INITIALIZER;
-
 // sockets
 - (void)openSocketWithURL:(NSURL *)url;
 - (void)closeSocket;
+
+// 
+- (void)subscribeUsers:(NSSet *)users;
 
 //
 - (void)sendMessage:(NSDictionary *)message;

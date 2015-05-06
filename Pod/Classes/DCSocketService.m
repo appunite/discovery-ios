@@ -8,31 +8,18 @@
 
 #import "DCSocketService.h"
 
-//Controllers
-#import "DCBluetoothMonitor.h"
-
 NSString * const AUMessageTypePresenceKey = @"presence";
 NSString * const AUMessageTypeAbsenceKey = @"absence";
 NSString * const AUMessageTypeMetadataKey = @"metadata";
 
-@interface DCSocketService () <DCBluetoothMonitorDelegate>
-
-@end
-
 @implementation DCSocketService
 
-- (instancetype)initWithIdentityMonitor:(DCBluetoothMonitor *)monitor {
-    NSParameterAssert(monitor);
-    
+- (instancetype)init {
     self = [super init];
     if (self) {
         // create basic serializer/deserializer
         _messageSerializer = [DCJSONMessageSerializer new];
         _messageDeserializer = [DCJSONMessageDeserializer new];
-
-        // create identity monitor
-        _centralManager = monitor;
-        _centralManager.delegate = self;
     }
     return self;
 }
@@ -52,6 +39,13 @@ NSString * const AUMessageTypeMetadataKey = @"metadata";
 - (void)closeSocket {
     // close socket
     [_webSocket close];
+}
+
+- (void)subscribeUsers:(NSSet *)users {
+    for (NSUUID *user in users) {
+        // send `presence` message
+        [self sendMessage:[[self class] presenceMessageForUserUUID:user]];
+    }
 }
 
 #pragma mark -
@@ -118,9 +112,6 @@ NSString * const AUMessageTypeMetadataKey = @"metadata";
     if ([_delegate respondsToSelector:@selector(controllerDidOpenSocketConnection:)]) {
         [_delegate controllerDidOpenSocketConnection:self];
     }
-    
-    // find some peripherials
-    [_centralManager startScanning];
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
@@ -131,9 +122,6 @@ NSString * const AUMessageTypeMetadataKey = @"metadata";
     if ([_delegate respondsToSelector:@selector(controllerDidOpenSocketConnection:)]) {
         [_delegate controllerDidCloseSocketConnection:self];
     }
-    
-    // stop scanning
-    [_centralManager stopScanning];
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error {
@@ -144,9 +132,6 @@ NSString * const AUMessageTypeMetadataKey = @"metadata";
     if ([_delegate respondsToSelector:@selector(controller:socketDidFailWithError:)]) {
         [_delegate controller:self socketDidFailWithError:error];
     }
-    
-    // stop scanning
-    [_centralManager stopScanning];
 }
 
 #pragma mark -
