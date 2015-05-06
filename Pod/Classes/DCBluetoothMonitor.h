@@ -20,6 +20,9 @@
 @property (nonatomic, strong, readonly) CBCentralManager *manager;
 @property (nonatomic, strong, readonly) dispatch_queue_t managerQueue;
 
+// list of discovered users' uuids
+@property (nonatomic, strong, readonly) NSSet *users;
+
 //
 @property (nonatomic, copy) BOOL (^rssiAcceptanceBlock)(NSNumber *rssi);
 
@@ -35,8 +38,20 @@
 - (instancetype)initWithServiceUUID:(CBUUID *)service
                  characteristicUUID:(CBUUID *)characteristic NS_DESIGNATED_INITIALIZER;
 
-//
+/*!
+ *  @method startScanning
+ *
+ *  @discussion Start scaning for registered services. This method is dispatched on central manager queue.
+ *
+ */
 - (void)startScanning;
+
+/*!
+ *  @method stopScanning
+ *
+ *  @discussion Stop scaning for all services. This method is dispatched on central manager queue.
+ *
+ */
 - (void)stopScanning;
 @end
 

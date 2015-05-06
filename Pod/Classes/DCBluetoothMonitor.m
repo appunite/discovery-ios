@@ -18,7 +18,7 @@
     // discovered peripherals
     NSMutableSet *_peripherals;
     NSMutableDictionary *_intervals;
-    NSMutableDictionary *_users;
+    NSMutableDictionary *_internalUsers;
 }
 
 - (instancetype)initWithServiceUUID:(CBUUID *)service characteristicUUID:(CBUUID *)characteristic {
@@ -29,7 +29,7 @@
         // create containers
         _peripherals = [NSMutableSet new];
         _intervals = [NSMutableDictionary new];
-        _users = [NSMutableDictionary new];
+        _internalUsers = [NSMutableDictionary new];
         
         // assign all UUID values
         _characteristicUUID = characteristic;
@@ -46,6 +46,31 @@
     NSParameterAssert(_serviceUUID);
 
     // start scanning
+    dispatch_sync(_managerQueue, ^{
+        [self _startScanning];
+    });
+}
+
+- (void)stopScanning {
+    // stop scanning
+    dispatch_sync(_managerQueue, ^{
+        [self _stopScanning];
+    });
+}
+
+- (NSArray *)users {
+    __block NSArray *array;
+    dispatch_sync(_managerQueue, ^{
+        array = [[_internalUsers allValues] copy];
+    });
+    return [NSSet setWithArray:array];
+}
+
+#pragma mark - 
+#pragma mark Sync start/stop
+
+- (void)_startScanning {
+    // start scanning
     [_manager scanForPeripheralsWithServices:@[_serviceUUID] options:@{
         CBCentralManagerScanOptionAllowDuplicatesKey: @YES,
         CBCentralManagerOptionShowPowerAlertKey: @YES
@@ -53,24 +78,21 @@
     
     // turn on timer flag
     _timer = YES;
-
+    
     // create timer
-    [self scheduledTimerWithTimeInterval:5];
-}
+    [self scheduledTimerWithTimeInterval:5];}
 
-- (void)stopScanning {
-    dispatch_async(_managerQueue, ^{
-        // turn of timer
-        _timer = NO;
-        
-        // clear collections
-        [_peripherals removeAllObjects];
-        [_intervals removeAllObjects];
-        [_users removeAllObjects];
-    });
-
+- (void)_stopScanning {
     // stop
     [_manager stopScan];
+    
+    // turn of timer
+    _timer = NO;
+    
+    // clear collections
+    [_peripherals removeAllObjects];
+    [_intervals removeAllObjects];
+    [_internalUsers removeAllObjects];
 }
 
 #pragma mark - 
@@ -87,7 +109,7 @@
     NSParameterAssert(_characteristicUUID);
     
     // start scanning
-    [self startScanning];
+    [self _startScanning];
 }
 
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)ad RSSI:(NSNumber *)rssi {
@@ -175,7 +197,7 @@
     
     // cache discovery date & value
     [_intervals setObject:[NSDate date] forKey:peripheral.identifier];
-    [_users setObject:uuid forKey:peripheral.identifier];
+    [_internalUsers setObject:uuid forKey:peripheral.identifier];
     
     // send delegate message
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -217,7 +239,7 @@
     [_peripherals removeObject:peripheral];
     
     // We're disconnected, so start scanning again
-    [self startScanning];
+    [self _startScanning];
 }
 
 - (void)cleanup:(CBPeripheral *)peripheral {
@@ -250,7 +272,6 @@
 }
 
 - (void)removeOutdatedUsers:(NSTimeInterval)interval {
-    dispatch_semaphore_t sem = dispatch_semaphore_create(0);
     NSMutableSet *uuids = [NSMutableSet new];
     
     // find outdated intervals
@@ -259,21 +280,18 @@
             [uuids addObject:key];
         }
     }];
+
+    // make copy of users
+    NSDictionary *user = [_internalUsers copy];
     
     // send delegate message
     dispatch_async(dispatch_get_main_queue(), ^{
         for (NSUUID *uuid in uuids) {
             if ([_delegate respondsToSelector:@selector(identityMonitor:didUnregiserUser:)]) {
-                [_delegate identityMonitor:self didUnregiserUser:_users[uuid]];
+                [_delegate identityMonitor:self didUnregiserUser:user[uuid]];
             }
         }
-        
-        // release semaphore
-        dispatch_semaphore_signal(sem);
     });
-    
-    // wait until inform delegate
-    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     
     // remove cached intervals
     [_intervals removeObjectsForKeys:[uuids allObjects]];

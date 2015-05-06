@@ -33,12 +33,12 @@ extern NSString * const AUIdentityEmitterRestoreIdentifierKey;
                           value:(NSUUID *)value NS_DESIGNATED_INITIALIZER;
 
 /*!
- *  @method startAdvertisingService
+ *  @method startAdvertising
  *
  *  @discussion This method starts broadcasting advertisment data.
  *
  */
-- (void)startAdvertisingService;
+- (void)startAdvertising;
 
 /*!
  *  @method stopAdvertising:

@@ -28,25 +28,29 @@
         }];
         
         // register service with characteristic
-        [self registerService:service characteristic:characteristic value:value];
+        [self createServiceWithUUID:service characteristicUUID:characteristic value:value];
     }
     return self;
 }
 
-- (void)startAdvertisingService {
-    // save payload
-    _advertisment = @{CBAdvertisementDataServiceUUIDsKey:@[_uuid]};
-    
-    // register service
-    if (_peripheralManager.state == CBPeripheralManagerStatePoweredOn) {
-        [_peripheralManager startAdvertising:_advertisment];
-    }
+- (void)startAdvertising {
+    dispatch_sync(_managerQueue, ^{
+        // save payload
+        _advertisment = @{CBAdvertisementDataServiceUUIDsKey:@[_uuid]};
+        
+        // register service
+        if (_peripheralManager.state == CBPeripheralManagerStatePoweredOn) {
+            [_peripheralManager startAdvertising:_advertisment];
+        }
+    });
 }
 
 - (void)stopAdvertising {
-    // stop advrtising
-    _advertisment = nil;
-    [_peripheralManager stopAdvertising];
+    dispatch_sync(_managerQueue, ^{
+        // stop advrtising
+        _advertisment = nil;
+        [_peripheralManager stopAdvertising];
+    });
 }
 
 #pragma mark -
@@ -109,7 +113,7 @@
 #pragma mark - 
 #pragma mark Private 
 
-- (void)registerService:(CBUUID *)service characteristic:(CBUUID *)characteristic value:(NSUUID *)value {
+- (void)createServiceWithUUID:(CBUUID *)service characteristicUUID:(CBUUID *)characteristic value:(NSUUID *)value {
     // convert value to bytes
     uuid_t uuid; [value getUUIDBytes:uuid];
     
