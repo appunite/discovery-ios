@@ -1,5 +1,5 @@
 //
-//  SecondViewController.h
+//  EXMonitorViewController.h
 //  Discovery
 //
 //  Created by Emil Wojtaszek on 11/04/15.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MonitorViewController : UITableViewController
+@interface EXMonitorViewController : UITableViewController
 
 
 @end

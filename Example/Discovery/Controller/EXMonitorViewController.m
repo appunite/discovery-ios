@@ -1,26 +1,31 @@
 //
-//  SecondViewController.m
+//  EXMonitorViewController.m
 //  Discovery
 //
 //  Created by Emil Wojtaszek on 11/04/15.
 //  Copyright (c) 2015 AppUnite.com. All rights reserved.
 //
 
-#import "MonitorViewController.h"
+#import "EXMonitorViewController.h"
 
 //Cell
-#import "UserCell.h"
+#import "EXUserCell.h"
 
 //Categories
 #import "UIImageView+AFNetworking.h"
 
 //Others
-#import "MyService.h"
+#import "EXConstants.h"
 
-@interface MonitorViewController () <DCSocketServiceDelegate>
+//Discovery
+#import "DCSocketService.h"
+#import "DCBluetoothMonitor.h"
+
+@interface EXMonitorViewController () <DCSocketServiceDelegate>
+@property (nonatomic, strong) DCBluetoothMonitor *bluetoothMonitor;
 @end
 
-@implementation MonitorViewController {
+@implementation EXMonitorViewController {
     NSMutableArray *_users;
     NSMutableDictionary *_metadata;
 }
@@ -31,21 +36,31 @@
     // create containers
     _users = [NSMutableArray new];
     _metadata = [NSMutableDictionary new];
+
+    // create UUID's
+    CBUUID *serviceUUID = [CBUUID UUIDWithString:EXServiceUUIDKey];
+    CBUUID *characteristicUUID = [CBUUID UUIDWithString:EXCharacteristicUUIDKey];
     
     // assign delegate
-    [[MyService sharedInstance] setDelegate:self];
+    DCSocketService *service = [DCSocketService sharedService];
+    [service setDelegate:self];
+
+    // create bluetooth monitor
+    _bluetoothMonitor = [[DCBluetoothMonitor alloc] initWithServiceUUID:serviceUUID characteristicUUID:characteristicUUID];
+    _bluetoothMonitor.delegate = service;
+    [_bluetoothMonitor startScanning];
 }
 
 #pragma mark - 
 #pragma mark UITableViewDataSource
 
-- (UserCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (EXUserCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // fetch user's metadata
     NSString *userUUID = _users[indexPath.row];
     NSDictionary *metadata = _metadata[userUUID];
 
     // dequeue and populate cell
-    UserCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UserCell class]) forIndexPath:indexPath];
+    EXUserCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([EXUserCell class]) forIndexPath:indexPath];
     // fill content
     [cell.idLabel setText:metadata[@"id"]];
     [cell.nameLabel setText:metadata[@"name"]];
@@ -67,6 +82,9 @@
 
 - (void)controllerDidOpenSocketConnection:(DCSocketService *)controller {
     NSLog(@"Socket connection status: open");
+    
+    // register already discovered user
+    [[DCSocketService sharedService] subscribeUsers:_bluetoothMonitor.users];
 }
 
 - (void)controllerDidCloseSocketConnection:(DCSocketService *)controller {
@@ -137,7 +155,7 @@
 #pragma mark Private
 
 - (void)updateTitle {
-    self.navigationItem.prompt = [_users count] != 0 ? [NSString stringWithFormat:@"%d user(s)", [_users count]] : nil;
+    self.navigationItem.prompt = [_users count] != 0 ? [NSString stringWithFormat:@"%ld user(s)", (unsigned long)[_users count]] : nil;
 }
 
 @end

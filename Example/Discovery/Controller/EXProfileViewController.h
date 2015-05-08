@@ -1,5 +1,5 @@
 //
-//  FirstViewController.h
+//  EXProfileViewController.h
 //  Discovery
 //
 //  Created by Emil Wojtaszek on 11/04/15.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProfileViewController : UIViewController
+@interface EXProfileViewController : UIViewController
 
 
 @end

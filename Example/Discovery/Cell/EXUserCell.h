@@ -1,5 +1,5 @@
 //
-//  UserCell.h
+//  EXUserCell.h
 //  Discovery
 //
 //  Created by Emil Wojtaszek on 04/05/15.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UserCell : UITableViewCell
+@interface EXUserCell : UITableViewCell
 // content
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *idLabel;

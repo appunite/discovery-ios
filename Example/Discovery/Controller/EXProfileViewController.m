@@ -1,20 +1,24 @@
 //
-//  FirstViewController.m
+//  EXProfileViewController.m
 //  Discovery
 //
 //  Created by Emil Wojtaszek on 11/04/15.
 //  Copyright (c) 2015 AppUnite.com. All rights reserved.
 //
 
-#import "ProfileViewController.h"
+#import "EXProfileViewController.h"
 
 //Categories
 #import "UIImageView+AFNetworking.h"
 
 //Others
-#import "MyService.h"
+#import "EXConstants.h"
 
-@interface ProfileViewController () <UITextFieldDelegate>
+//Discovery
+#import "DCSocketService.h"
+#import "DCBluetoothEmitter.h"
+
+@interface EXProfileViewController () <UITextFieldDelegate>
 //Outlets
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
@@ -23,15 +27,15 @@
 @property (strong, nonatomic) DCBluetoothEmitter *bluetoothEmitter;
 @end
 
-@implementation ProfileViewController
+@implementation EXProfileViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     // create UUID's
-    CBUUID *serviceUUID = [CBUUID UUIDWithString:MyServiceExampleServiceUUIDKey];
-    CBUUID *characteristicUUID = [CBUUID UUIDWithString:MyServiceExampleCharacteristicUUIDKey];
-    NSUUID *userUUID = [[NSUUID alloc] initWithUUIDString:MyServiceExampleUserUUIDKey];
+    CBUUID *serviceUUID = [CBUUID UUIDWithString:EXServiceUUIDKey];
+    CBUUID *characteristicUUID = [CBUUID UUIDWithString:EXCharacteristicUUIDKey];
+    NSUUID *userUUID = [[NSUUID alloc] initWithUUIDString:EXUserUUIDKey];
     
     // create bluetooth emmiter
     self.bluetoothEmitter = [[DCBluetoothEmitter alloc] initWithService:serviceUUID
@@ -47,7 +51,7 @@
 
 - (IBAction)advertiseAction:(UISwitch *)sender {
     if (sender.isOn) {
-        [self.bluetoothEmitter startAdvertisingService];
+        [self.bluetoothEmitter startAdvertising];
     } else {
         [self.bluetoothEmitter stopAdvertising];
     }
@@ -59,12 +63,12 @@
     [self.emailTextField resignFirstResponder];
     
     // check connection
-    MyService *service = [MyService sharedInstance];
+    DCSocketService *service = [DCSocketService sharedService];
     if (service.webSocket.readyState != SR_OPEN) return;
 
     // metadata payload
     NSDictionary *metadata = @{
-        @"id": [[NSUUID alloc] initWithUUIDString:MyServiceExampleUserUUIDKey],
+        @"id": [[NSUUID alloc] initWithUUIDString:EXUserUUIDKey],
         @"name": self.nameTextField.text,
         @"email": self.emailTextField,
         @"avatar": [self avatarURLString]
