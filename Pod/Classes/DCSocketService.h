@@ -30,6 +30,9 @@
 // web socket
 @property (nonatomic, strong, readonly) SRWebSocket *webSocket;
 
+//
++ (instancetype)sharedService;
+
 // sockets
 - (void)openSocketWithURL:(NSURL *)url;
 - (void)closeSocket;

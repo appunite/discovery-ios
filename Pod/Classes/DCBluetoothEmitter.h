@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 
-extern NSString * const AUIdentityEmitterRestoreIdentifierKey;
+extern NSString * const DCBluetoothEmitterRestoreIdentifierKey;
 
 @interface DCBluetoothEmitter : NSObject <CBPeripheralManagerDelegate>
 // bluetooth peripheral manager

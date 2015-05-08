@@ -24,33 +24,56 @@
         _managerQueue = dispatch_queue_create("com.appunite.peripheral.queue", DISPATCH_QUEUE_SERIAL);
         _peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:_managerQueue options:@{
             CBPeripheralManagerOptionShowPowerAlertKey: @YES,
-            CBPeripheralManagerOptionRestoreIdentifierKey: AUIdentityEmitterRestoreIdentifierKey
+            CBPeripheralManagerOptionRestoreIdentifierKey: DCBluetoothEmitterRestoreIdentifierKey
         }];
         
-        // register service with characteristic
-        [self createServiceWithUUID:service characteristicUUID:characteristic value:value];
+        // convert value to bytes
+        uuid_t uuid; [value getUUIDBytes:uuid];
+        
+        // create characteristic
+        CBMutableCharacteristic *mutableCharacteristic = [[CBMutableCharacteristic alloc] initWithType:characteristic
+                                                                                            properties:CBCharacteristicPropertyRead
+                                                                                                 value:[NSData dataWithBytes:uuid length:16]
+                                                                                           permissions:CBAttributePermissionsReadable];
+        
+        // create service
+        _service = [[CBMutableService alloc] initWithType:service primary:YES];
+        
+        // add the characteristic to the service
+        _service.characteristics = @[mutableCharacteristic];
     }
     return self;
 }
 
 - (void)startAdvertising {
     dispatch_sync(_managerQueue, ^{
-        // save payload
-        _advertisment = @{CBAdvertisementDataServiceUUIDsKey:@[_uuid]};
-        
-        // register service
-        if (_peripheralManager.state == CBPeripheralManagerStatePoweredOn) {
-            [_peripheralManager startAdvertising:_advertisment];
-        }
+        [self _startAdvertising];
     });
 }
 
 - (void)stopAdvertising {
     dispatch_sync(_managerQueue, ^{
-        // stop advrtising
-        _advertisment = nil;
-        [_peripheralManager stopAdvertising];
+        [self _stopAdvertising];
     });
+}
+
+#pragma mark -
+#pragma mark Sync start/stop
+
+- (void)_startAdvertising {
+    // save payload
+    _advertisment = @{CBAdvertisementDataServiceUUIDsKey:@[_uuid]};
+    
+    // register service
+    if (_peripheralManager.state == CBPeripheralManagerStatePoweredOn) {
+        [_peripheralManager startAdvertising:_advertisment];
+    }
+}
+
+- (void)_stopAdvertising {
+    // stop advrtising
+    _advertisment = nil;
+    [_peripheralManager stopAdvertising];
 }
 
 #pragma mark -
@@ -110,27 +133,7 @@
     NSLog(@"Central: %@ did unsubscribe from characteristic: %@", [[central identifier] UUIDString], [[characteristic UUID] UUIDString]);
 }
 
-#pragma mark - 
-#pragma mark Private 
-
-- (void)createServiceWithUUID:(CBUUID *)service characteristicUUID:(CBUUID *)characteristic value:(NSUUID *)value {
-    // convert value to bytes
-    uuid_t uuid; [value getUUIDBytes:uuid];
-    
-    // create characteristic
-    CBMutableCharacteristic *mutableCharacteristic = [[CBMutableCharacteristic alloc] initWithType:characteristic
-                                                                                        properties:CBCharacteristicPropertyRead
-                                                                                             value:[NSData dataWithBytes:uuid length:16]
-                                                                                       permissions:CBAttributePermissionsReadable];
-    
-    // create service
-    _service = [[CBMutableService alloc] initWithType:service primary:YES];
-    
-    // add the characteristic to the service
-    _service.characteristics = @[mutableCharacteristic];
-}
-
 @end
 
-NSString * const AUIdentityEmitterRestoreIdentifierKey = @"com.appunite.peripherial.restore-identifier";
+NSString * const DCBluetoothEmitterRestoreIdentifierKey = @"com.appunite.peripherial.restore-identifier";
 

@@ -14,6 +14,15 @@ NSString * const AUMessageTypeMetadataKey = @"metadata";
 
 @implementation DCSocketService
 
++ (id)sharedService {
+    static DCSocketService *sharedInstance = nil;
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
