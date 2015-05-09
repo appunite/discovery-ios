@@ -37,7 +37,7 @@
 
         // start up the CBCentralManager
         _managerQueue = dispatch_queue_create("com.appunite.central.queue", DISPATCH_QUEUE_SERIAL);
-        _manager = [[CBCentralManager alloc] initWithDelegate:self queue:_managerQueue];
+        _manager = [[CBCentralManager alloc] initWithDelegate:self queue:self.managerQueue];
     }
     return self;
 }
@@ -46,21 +46,21 @@
     NSParameterAssert(_serviceUUID);
 
     // start scanning
-    dispatch_sync(_managerQueue, ^{
+    dispatch_sync(self.managerQueue, ^{
         [self _startScanning];
     });
 }
 
 - (void)stopScanning {
     // stop scanning
-    dispatch_sync(_managerQueue, ^{
+    dispatch_sync(self.managerQueue, ^{
         [self _stopScanning];
     });
 }
 
 - (NSArray *)users {
     __block NSArray *array;
-    dispatch_sync(_managerQueue, ^{
+    dispatch_sync(self.managerQueue, ^{
         array = [[_internalUsers allValues] copy];
     });
     return [NSSet setWithArray:array];
@@ -298,7 +298,7 @@
 }
 
 - (void)scheduledTimerWithTimeInterval:(NSTimeInterval)interval {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), _managerQueue, ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), self.managerQueue, ^{
         if (!_timer) return;
         
         // remove uuids

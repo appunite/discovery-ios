@@ -22,7 +22,7 @@
         
         // create manager
         _managerQueue = dispatch_queue_create("com.appunite.peripheral.queue", DISPATCH_QUEUE_SERIAL);
-        _peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:_managerQueue options:@{
+        _peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:self.managerQueue options:@{
             CBPeripheralManagerOptionShowPowerAlertKey: @YES,
             CBPeripheralManagerOptionRestoreIdentifierKey: DCBluetoothEmitterRestoreIdentifierKey
         }];
@@ -46,13 +46,13 @@
 }
 
 - (void)startAdvertising {
-    dispatch_sync(_managerQueue, ^{
+    dispatch_sync(self.managerQueue, ^{
         [self _startAdvertising];
     });
 }
 
 - (void)stopAdvertising {
-    dispatch_sync(_managerQueue, ^{
+    dispatch_sync(self.managerQueue, ^{
         [self _stopAdvertising];
     });
 }
