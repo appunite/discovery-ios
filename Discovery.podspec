@@ -10,15 +10,8 @@
 Pod::Spec.new do |s|
   s.name             = "Discovery"
   s.version          = "0.1.0"
-  s.summary          = "A short description of Discovery."
-  s.description      = <<-DESC
-                       An optional longer description of Discovery
-
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
-                       DESC
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/Discovery"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+  s.summary          = "Discover users around you using bluetooth."
+  s.homepage         = "https://github.com/appunite/discovery-ios"
   s.license          = 'MIT'
   s.author           = { "Emil Wojtaszek" => "emil@appunite.com" }
   s.source           = { :git => "https://github.com/appunite/discovery-ios.git", :tag => s.version.to_s }
@@ -27,11 +20,8 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '7.0'
   s.requires_arc = true
 
-  s.source_files = 'Pod/Classes/**/*'
-  s.resource_bundles = {
-    'Discovery' => ['Pod/Assets/*.png']
-  }
-
+  s.source_files = 'Pod/**/*'
+  
   s.frameworks = 'CoreBluetooth'
   s.dependency 'SocketRocket', '~> 0.2'
 end
