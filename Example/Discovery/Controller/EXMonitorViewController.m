@@ -59,7 +59,7 @@
     
     // connect if needed
     if (service.webSocket.readyState != SR_OPEN) {
-        [service openSocketWithURL:[NSURL URLWithString:@"ws://discovery.io/1/2"]];
+        [service openSocketWithURL:[NSURL URLWithString:EXSocketURL]];
     }
 }
 
