@@ -10,6 +10,5 @@
 
 @interface EXProfileViewController : UIViewController
 
-
 @end
 

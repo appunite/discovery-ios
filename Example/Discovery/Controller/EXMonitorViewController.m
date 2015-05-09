@@ -51,7 +51,19 @@
     [_bluetoothMonitor startScanning];
 }
 
-#pragma mark - 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    //
+    DCSocketService *service = [DCSocketService sharedService];
+    
+    // connect if needed
+    if (service.webSocket.readyState != SR_OPEN) {
+        [service openSocketWithURL:[NSURL URLWithString:@"ws://discovery.io/1/2"]];
+    }
+}
+
+#pragma mark -
 #pragma mark UITableViewDataSource
 
 - (EXUserCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

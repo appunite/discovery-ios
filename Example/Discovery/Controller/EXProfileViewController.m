@@ -42,7 +42,7 @@
                                                          characteristic:characteristicUUID
                                                                   value:userUUID];
 
-    // fetch avatar imahe
+    // fetch avatar image
     [self updateAvatar];
 }
 
