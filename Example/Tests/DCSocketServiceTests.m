@@ -31,7 +31,7 @@
                                                    characteristicUUID:[CBUUID UUIDWithString:@"8E6D7A6B-BF18-4A77-AEEF-E04B9D1265C2"]];
 
     // create socket service
-    _socketService = [[DCSocketService alloc] initWithIdentityMonitor:_bluetoothMonitor];
+    _socketService = [[DCSocketService alloc] init];
 }
 
 - (void)testSocketConnectionOpening {
