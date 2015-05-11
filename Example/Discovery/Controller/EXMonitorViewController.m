@@ -7,6 +7,7 @@
 //
 
 #import "EXMonitorViewController.h"
+#import "EXProfileViewController.h"
 
 //Cell
 #import "EXUserCell.h"
@@ -15,51 +16,20 @@
 #import "UIImageView+AFNetworking.h"
 
 //Others
-#import "EXConstants.h"
+#import "DCMonitorProvider.h"
 
-//Discovery
-#import "DCSocketService.h"
-#import "DCBluetoothMonitor.h"
-
-@interface EXMonitorViewController () <DCSocketServiceDelegate>
-@property (nonatomic, strong) DCBluetoothMonitor *bluetoothMonitor;
+@interface EXMonitorViewController () <DCMonitorProviderDelegate>
+@property (strong, nonatomic) IBOutlet DCMonitorProvider *provider;
 @end
 
-@implementation EXMonitorViewController {
-    NSMutableArray *_users;
-    NSMutableDictionary *_metadata;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
-    // create containers
-    _users = [NSMutableArray new];
-    _metadata = [NSMutableDictionary new];
-
-    // create UUID's
-    CBUUID *serviceUUID = [CBUUID UUIDWithString:EXServiceUUIDKey];
-    CBUUID *characteristicUUID = [CBUUID UUIDWithString:EXCharacteristicUUIDKey];
-    
-    // assign delegate
-    DCSocketService *service = [DCSocketService sharedService];
-    [service setDelegate:self];
-
-    // create bluetooth monitor
-    _bluetoothMonitor = [[DCBluetoothMonitor alloc] initWithServiceUUID:serviceUUID characteristicUUID:characteristicUUID];
-    _bluetoothMonitor.delegate = service;
-    [_bluetoothMonitor startScanning];
-}
+@implementation EXMonitorViewController
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    //
-    DCSocketService *service = [DCSocketService sharedService];
-    
     // connect if needed
-    if (service.webSocket.readyState != SR_OPEN) {
-        [service openSocketWithURL:[NSURL URLWithString:EXSocketURL]];
+    if (_provider.manager.socketService.webSocket.readyState != SR_OPEN) {
+        [_provider.manager.socketService openSocketWithURL:[NSURL URLWithString:EXSocketURL]];
     }
 }
 
@@ -68,8 +38,8 @@
 
 - (EXUserCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // fetch user's metadata
-    NSString *userUUID = _users[indexPath.row];
-    NSDictionary *metadata = _metadata[userUUID];
+    NSString *userUUID = _provider.users[indexPath.row];
+    NSDictionary *metadata = _provider.metadata[userUUID];
 
     // dequeue and populate cell
     EXUserCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([EXUserCell class]) forIndexPath:indexPath];
@@ -86,36 +56,13 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_users count];
+    return [_provider.users count];
 }
 
 #pragma mark - 
 #pragma mark DCSocketServiceDelegate
 
-- (void)controllerDidOpenSocketConnection:(DCSocketService *)controller {
-    NSLog(@"Socket connection status: open");
-    
-    // register already discovered user
-    [[DCSocketService sharedService] subscribeUsers:_bluetoothMonitor.users];
-}
-
-- (void)controllerDidCloseSocketConnection:(DCSocketService *)controller {
-    NSLog(@"Socket connection status: closed");
-}
-
-- (void)controller:(DCSocketService *)controller socketDidFailWithError:(NSError *)error {
-    NSLog(@"Socket error: %@", error.localizedDescription);
-}
-
-- (void)controller:(DCSocketService *)controller didSubscribeToUser:(NSUUID *)user {
-    NSLog(@"Subscribed to user: %@", [user UUIDString]);
-
-    // update list of currently visible users
-    [_users addObject:[user UUIDString]];
-
-    // last index path
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[_users count] -1 inSection:0];
-
+- (void)provider:(DCMonitorProvider *)provider didAddUserAtIndexPath:(NSIndexPath *)indexPath {
     // animate insertion
     [self.tableView beginUpdates];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -125,19 +72,7 @@
     [self updateTitle];
 }
 
-- (void)controller:(DCSocketService *)controller didUnsubscribeFromUser:(NSUUID *)user {
-    NSLog(@"Unsubscribed from user: %@", [user UUIDString]);
-
-    // get idex of user to delete
-    NSInteger idx = [_users indexOfObject:[user UUIDString]];
-    if (idx == NSNotFound) return;
-    
-    // user's index path
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:idx inSection:0];
-
-    // update list of currently visible users
-    [_users removeObjectAtIndex:idx];
-    
+- (void)provider:(DCMonitorProvider *)provider didRemoveUserAtIndexPath:(NSIndexPath *)indexPath {
     // animate insertion
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -147,27 +82,38 @@
     [self updateTitle];
 }
 
-- (void)controller:(DCSocketService *)controller didReceiveMessage:(NSDictionary *)data {
-    // desompose response
-    NSDictionary *body = data[@"body"];
-    NSString *uid = body[@"id"];
-    
-    // update metadata
-    [_metadata setObject:body forKey:uid];
-
-    // reload cell
-    NSUInteger idx = [_users indexOfObject:uid];
-    if (idx != NSNotFound) {
-        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]]
-                              withRowAnimation:UITableViewRowAnimationFade];
-    }
+- (void)provider:(DCMonitorProvider *)provider didUpdateUserAtIndexPath:(NSIndexPath *)indexPath {
+    // animate update
+    [self.tableView beginUpdates];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
 }
 
 #pragma mark -
 #pragma mark Private
 
 - (void)updateTitle {
-    self.navigationItem.prompt = [_users count] != 0 ? [NSString stringWithFormat:@"%ld user(s)", (unsigned long)[_users count]] : nil;
+    NSUInteger count = [_provider.users count];
+    self.navigationItem.prompt = count != 0 ? [NSString stringWithFormat:@"%ld user(s)", (unsigned long)count] : nil;
+}
+
+#pragma mark - 
+#pragma mark Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    EXProfileViewController *viewController = [segue destinationViewController];
+    viewController.manager = _provider.manager;
+}
+
+#pragma mark -
+#pragma mark Actions
+
+- (IBAction)advertiseAction:(UISwitch *)sender {
+    if (sender.isOn) {
+        [_provider.manager.bluetoothEmitter startAdvertising];
+    } else {
+        [_provider.manager.bluetoothEmitter stopAdvertising];
+    }
 }
 
 @end

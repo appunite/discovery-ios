@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Iue-p7-tWp">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -27,18 +28,6 @@
                                     <outlet property="delegate" destination="9pv-A4-QxB" id="6Db-yg-4hC"/>
                                 </connections>
                             </textField>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="kiP-v1-m4q">
-                                <rect key="frame" x="276" y="206" width="51" height="31"/>
-                                <connections>
-                                    <action selector="advertiseAction:" destination="9pv-A4-QxB" eventType="valueChanged" id="9qD-Iu-Azf"/>
-                                </connections>
-                            </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Advertise" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wpH-q5-JlM">
-                                <rect key="frame" x="270" y="254" width="61" height="17"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                <color key="textColor" red="0.29803921568627451" green="0.29803921568627451" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yOd-wp-kny">
                                 <rect key="frame" x="16" y="108" width="40" height="17"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
@@ -77,20 +66,16 @@
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="yX6-9l-nCx" secondAttribute="trailing" constant="-1" id="3re-jb-uzq"/>
                             <constraint firstItem="02v-Lw-7x1" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="6" id="3y4-tu-bMT"/>
-                            <constraint firstItem="wpH-q5-JlM" firstAttribute="top" secondItem="kiP-v1-m4q" secondAttribute="bottom" constant="17" id="DOx-BZ-ZZ8"/>
                             <constraint firstItem="2V3-nx-qIE" firstAttribute="centerY" secondItem="02v-Lw-7x1" secondAttribute="centerY" constant="0.5" id="L0d-ID-Npb"/>
                             <constraint firstItem="02v-Lw-7x1" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" id="NIh-TB-N7I"/>
                             <constraint firstItem="yX6-9l-nCx" firstAttribute="top" secondItem="W3j-km-d7I" secondAttribute="top" constant="-3" id="S6c-R4-QrD"/>
                             <constraint firstItem="yOd-wp-kny" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" id="Sb1-8d-Z1X"/>
                             <constraint firstItem="W3j-km-d7I" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="38" id="WIY-AC-Gb1"/>
                             <constraint firstItem="2V3-nx-qIE" firstAttribute="top" secondItem="W3j-km-d7I" secondAttribute="bottom" constant="12" id="Xr6-5v-XdM"/>
-                            <constraint firstItem="kiP-v1-m4q" firstAttribute="top" secondItem="2V3-nx-qIE" secondAttribute="bottom" constant="32" id="fDx-tJ-Y7i"/>
                             <constraint firstItem="yX6-9l-nCx" firstAttribute="leading" secondItem="W3j-km-d7I" secondAttribute="trailing" constant="8" id="jNQ-9E-dwF"/>
                             <constraint firstItem="yX6-9l-nCx" firstAttribute="leading" secondItem="2V3-nx-qIE" secondAttribute="trailing" constant="8" id="kGM-Iw-OeN"/>
                             <constraint firstItem="W3j-km-d7I" firstAttribute="leading" secondItem="yOd-wp-kny" secondAttribute="trailing" constant="10" id="llp-9h-cB2"/>
                             <constraint firstItem="02v-Lw-7x1" firstAttribute="trailing" secondItem="yOd-wp-kny" secondAttribute="trailing" id="ozi-Cp-B1i"/>
-                            <constraint firstAttribute="centerX" secondItem="kiP-v1-m4q" secondAttribute="centerX" id="rmT-kj-3Rx"/>
-                            <constraint firstAttribute="centerX" secondItem="wpH-q5-JlM" secondAttribute="centerX" id="xSn-as-8Ah"/>
                             <constraint firstItem="W3j-km-d7I" firstAttribute="leading" secondItem="2V3-nx-qIE" secondAttribute="leading" id="xv1-gb-yCi"/>
                             <constraint firstItem="W3j-km-d7I" firstAttribute="centerY" secondItem="yOd-wp-kny" secondAttribute="centerY" id="xw8-7v-nYO"/>
                             <constraint firstItem="2V3-nx-qIE" firstAttribute="leading" secondItem="02v-Lw-7x1" secondAttribute="trailing" constant="10" id="zjL-O8-PFL"/>
@@ -117,7 +102,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1583" y="54"/>
+            <point key="canvasLocation" x="2171" y="909"/>
         </scene>
         <!--Monitor-->
         <scene sceneID="oC6-NL-veg">
@@ -163,7 +148,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vIC-Lk-8p1" userLabel="Name Label">
                                             <rect key="frame" x="94" y="28" width="490" height="20"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OlW-Zu-J7s" userLabel="Email Label">
@@ -218,54 +203,46 @@
                             <outlet property="delegate" destination="x5T-no-4SV" id="zCi-o9-Ee6"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Monitor" id="2pb-pg-Dfe"/>
+                    <toolbarItems>
+                        <barButtonItem style="plain" id="c3h-tN-tvK">
+                            <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Cyy-zB-VLD">
+                                <rect key="frame" x="-25" y="-15" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="advertiseAction:" destination="x5T-no-4SV" eventType="valueChanged" id="IS7-hf-Q2c"/>
+                                </connections>
+                            </switch>
+                        </barButtonItem>
+                        <barButtonItem enabled="NO" title="Advertise" id="tB8-GY-Hta">
+                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="JXv-Kq-G2V"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Monitor" id="2pb-pg-Dfe">
+                        <barButtonItem key="rightBarButtonItem" title="Profile" id="zRx-Lr-tWa">
+                            <connections>
+                                <segue destination="9pv-A4-QxB" kind="show" id="Uj2-pD-Q9Q"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="provider" destination="3Wj-Xa-czo" id="Glk-2z-pau"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ow7-b7-Ihq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1583" y="909"/>
-        </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="yl2-sM-qoP">
-            <objects>
-                <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
-                        <rect key="frame" x="0.0" y="975" width="768" height="49"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </tabBar>
+                <customObject id="O5k-vV-HrC" customClass="EXManager"/>
+                <customObject id="3Wj-Xa-czo" customClass="DCMonitorProvider">
                     <connections>
-                        <segue destination="Iue-p7-tWp" kind="relationship" relationship="viewControllers" id="09e-mW-It3"/>
-                        <segue destination="JiT-Qd-W2e" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
+                        <outlet property="manager" destination="O5k-vV-HrC" id="BGK-gW-CKa"/>
                     </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
+                </customObject>
             </objects>
-            <point key="canvasLocation" x="-21" y="434"/>
-        </scene>
-        <!--Profile-->
-        <scene sceneID="f01-7S-SmT">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JiT-Qd-W2e" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" id="acW-dT-cKf"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dTo-6f-AJv">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="rootViewController" id="KUK-Ru-zCJ"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lvz-0H-JBm" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="771" y="54"/>
+            <point key="canvasLocation" x="1464" y="909"/>
         </scene>
         <!--Monitor-->
         <scene sceneID="Abe-Ve-R1A">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Iue-p7-tWp" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="Iue-p7-tWp" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Monitor" id="tfK-IC-mXC"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Fov-mO-IuI">
@@ -273,6 +250,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="U6x-OS-AWB">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="x5T-no-4SV" kind="relationship" relationship="rootViewController" id="yT8-H0-syN"/>
                     </connections>

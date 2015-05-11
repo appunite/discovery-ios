@@ -11,36 +11,17 @@
 //Categories
 #import "UIImageView+AFNetworking.h"
 
-//Others
-#import "EXConstants.h"
-
-//Discovery
-#import "DCSocketService.h"
-#import "DCBluetoothEmitter.h"
-
 @interface EXProfileViewController () <UITextFieldDelegate>
 //Outlets
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
-//Discovery
-@property (strong, nonatomic) DCBluetoothEmitter *bluetoothEmitter;
 @end
 
 @implementation EXProfileViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    // create UUID's
-    CBUUID *serviceUUID = [CBUUID UUIDWithString:EXServiceUUIDKey];
-    CBUUID *characteristicUUID = [CBUUID UUIDWithString:EXCharacteristicUUIDKey];
-    NSUUID *userUUID = [[NSUUID alloc] initWithUUIDString:EXUserUUIDKey];
-    
-    // create bluetooth emmiter
-    self.bluetoothEmitter = [[DCBluetoothEmitter alloc] initWithService:serviceUUID
-                                                         characteristic:characteristicUUID
-                                                                  value:userUUID];
 
     // fetch avatar image
     [self updateAvatar];
@@ -49,21 +30,13 @@
 #pragma mark -
 #pragma mark Actions
 
-- (IBAction)advertiseAction:(UISwitch *)sender {
-    if (sender.isOn) {
-        [self.bluetoothEmitter startAdvertising];
-    } else {
-        [self.bluetoothEmitter stopAdvertising];
-    }
-}
-
 - (IBAction)updateAction:(id)sender {
     // hide keyboard
     [self.nameTextField resignFirstResponder];
     [self.emailTextField resignFirstResponder];
     
     // check connection
-    DCSocketService *service = [DCSocketService sharedService];
+    DCSocketService *service = [_manager socketService];
     if (service.webSocket.readyState != SR_OPEN) return;
 
     // metadata payload

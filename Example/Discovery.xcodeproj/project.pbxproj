@@ -16,6 +16,8 @@
 		208809A81AF81E1A000DBE37 /* DCJSONMessageDeserializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 208809A51AF81E1A000DBE37 /* DCJSONMessageDeserializerTests.m */; };
 		208809A91AF81E1A000DBE37 /* DCJSONMessageSerializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 208809A61AF81E1A000DBE37 /* DCJSONMessageSerializerTests.m */; };
 		208809AA1AF81E1A000DBE37 /* DCSocketServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 208809A71AF81E1A000DBE37 /* DCSocketServiceTests.m */; };
+		20BDE64D1B01285300173564 /* EXManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BDE64C1B01285300173564 /* EXManager.m */; };
+		20BDE6511B0153D900173564 /* DCMonitorProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BDE6501B0153D900173564 /* DCMonitorProvider.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -54,6 +56,10 @@
 		208809A51AF81E1A000DBE37 /* DCJSONMessageDeserializerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCJSONMessageDeserializerTests.m; sourceTree = "<group>"; };
 		208809A61AF81E1A000DBE37 /* DCJSONMessageSerializerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCJSONMessageSerializerTests.m; sourceTree = "<group>"; };
 		208809A71AF81E1A000DBE37 /* DCSocketServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCSocketServiceTests.m; sourceTree = "<group>"; };
+		20BDE64B1B01285300173564 /* EXManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EXManager.h; path = Others/EXManager.h; sourceTree = "<group>"; };
+		20BDE64C1B01285300173564 /* EXManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EXManager.m; path = Others/EXManager.m; sourceTree = "<group>"; };
+		20BDE64F1B0153D900173564 /* DCMonitorProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DCMonitorProvider.h; path = Others/DCMonitorProvider.h; sourceTree = "<group>"; };
+		20BDE6501B0153D900173564 /* DCMonitorProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DCMonitorProvider.m; path = Others/DCMonitorProvider.m; sourceTree = "<group>"; };
 		277CEC549550D09482CB49F7 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		349B19E3C43A7B954DABE620 /* Pods-Discovery.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Discovery.release.xcconfig"; path = "Pods/Target Support Files/Pods-Discovery/Pods-Discovery.release.xcconfig"; sourceTree = "<group>"; };
 		3DBF0B81372634A730E6E040 /* Discovery.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Discovery.podspec; path = ../Discovery.podspec; sourceTree = "<group>"; };
@@ -122,6 +128,7 @@
 			children = (
 				208736171AF6D504001F73D2 /* EXMonitorViewController.h */,
 				208736181AF6D504001F73D2 /* EXMonitorViewController.m */,
+				20BDE64E1B0153BE00173564 /* DataSource */,
 				2087361D1AF6E133001F73D2 /* Cells */,
 			);
 			name = Monitor;
@@ -148,10 +155,21 @@
 		208736251AF6E47B001F73D2 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				20BDE64B1B01285300173564 /* EXManager.h */,
+				20BDE64C1B01285300173564 /* EXManager.m */,
 				208736261AF6E4AA001F73D2 /* EXConstants.h */,
 				208736271AF6E4AA001F73D2 /* EXConstants.m */,
 			);
 			name = Others;
+			sourceTree = "<group>";
+		};
+		20BDE64E1B0153BE00173564 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				20BDE64F1B0153D900173564 /* DCMonitorProvider.h */,
+				20BDE6501B0153D900173564 /* DCMonitorProvider.m */,
+			);
+			name = DataSource;
 			sourceTree = "<group>";
 		};
 		6003F581195388D10070C39A = {
@@ -431,9 +449,11 @@
 			files = (
 				6003F59E195388D20070C39A /* AppDelegate.m in Sources */,
 				208736221AF6E21E001F73D2 /* EXMonitorViewController.m in Sources */,
+				20BDE6511B0153D900173564 /* DCMonitorProvider.m in Sources */,
 				208736211AF6E21E001F73D2 /* EXProfileViewController.m in Sources */,
 				208736281AF6E4AA001F73D2 /* EXConstants.m in Sources */,
 				208736231AF6E21E001F73D2 /* EXUserCell.m in Sources */,
+				20BDE64D1B01285300173564 /* EXManager.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

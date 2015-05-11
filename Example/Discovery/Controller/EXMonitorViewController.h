@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+//Others
+#import "EXManager.h"
+#import "EXConstants.h"
+
 @interface EXMonitorViewController : UITableViewController
 
-
 @end
-

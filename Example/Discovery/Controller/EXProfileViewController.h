@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EXProfileViewController : UIViewController
+//Others
+#import "EXManager.h"
+#import "EXConstants.h"
 
+@interface EXProfileViewController : UIViewController
+@property (nonatomic, strong) EXManager *manager;
 @end
 
