@@ -22,4 +22,5 @@
 @property (strong, nonatomic) DCBluetoothMonitor *bluetoothMonitor;
 
 - (void)assignUsers;
+- (NSUUID *)userUUID;
 @end

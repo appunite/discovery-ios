@@ -15,7 +15,7 @@
 @protocol DCMonitorProviderDelegate;
 
 @interface DCMonitorProvider : NSObject <DCSocketServiceDelegate>
-@property (nonatomic, weak) id<DCMonitorProviderDelegate> delegate;
+@property (nonatomic, weak) IBOutlet id<DCMonitorProviderDelegate> delegate;
 //
 @property (nonatomic, strong) IBOutlet EXManager *manager;
 

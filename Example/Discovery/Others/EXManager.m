@@ -19,7 +19,7 @@
         // create UUID's
         CBUUID *serviceUUID = [CBUUID UUIDWithString:EXServiceUUIDKey];
         CBUUID *characteristicUUID = [CBUUID UUIDWithString:EXCharacteristicUUIDKey];
-        NSUUID *userUUID = [[NSUUID alloc] initWithUUIDString:EXUserUUIDKey];
+        NSUUID *userUUID = [self userUUID];
         
         // create socket service
         self.socketService = [[DCSocketService alloc] init];
@@ -41,6 +41,17 @@
 
 - (void)assignUsers {
     [_socketService subscribeUsers:_bluetoothMonitor.users];
+}
+
+- (NSUUID *)userUUID {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *uuid = [userDefaults objectForKey:EXUserUUIDKey];
+    if (!uuid) {
+        uuid = [[NSUUID UUID] UUIDString];
+        [userDefaults setObject:uuid forKey:EXUserUUIDKey];
+    }
+
+    return [[NSUUID alloc] initWithUUIDString:uuid];;
 }
 
 @end

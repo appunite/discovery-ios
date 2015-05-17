@@ -23,6 +23,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    // load values
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    self.nameTextField.text = [userDefaults objectForKey:EXUserNameKey] ?: @"appunite";
+    self.emailTextField.text = [userDefaults objectForKey:EXUserEmailKey] ?: @"office@appunite.com";
+
     // fetch avatar image
     [self updateAvatar];
 }
@@ -41,9 +46,9 @@
 
     // metadata payload
     NSDictionary *metadata = @{
-        @"id": [[NSUUID alloc] initWithUUIDString:EXUserUUIDKey],
+        @"id": [[_manager userUUID] UUIDString],
         @"name": self.nameTextField.text,
-        @"email": self.emailTextField,
+        @"email": self.emailTextField.text,
         @"avatar": [self avatarURLString]
     };
     
@@ -52,6 +57,11 @@
     
     // update avatar image view
     [self updateAvatar];
+
+    // save values in user defaults
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:self.nameTextField.text forKey:EXUserNameKey];
+    [userDefaults setObject:self.emailTextField.text forKey:EXUserEmailKey];
 }
 
 #pragma mark - 

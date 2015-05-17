@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Iue-p7-tWp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Iue-p7-tWp">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -113,19 +113,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCell" rowHeight="103" id="E9T-qh-GcY" customClass="EXUserCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EXUserCell" rowHeight="103" id="E9T-qh-GcY" customClass="EXUserCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E9T-qh-GcY" id="Hfp-PC-nzh">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="309B0F00-AD18-4E4B-AC82-178CE4565BB5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Noj-UX-hsV" userLabel="UUID Label">
-                                            <rect key="frame" x="182" y="8" width="236" height="14"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="309B0F00-AD18-4E4B-AC82-178CE4565BB5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Noj-UX-hsV" userLabel="UUID Label">
+                                            <rect key="frame" x="182" y="8" width="236" height="13.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                             <color key="textColor" red="0.29803921568627451" green="0.29803921568627451" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lXo-VM-9tp">
-                                            <rect key="frame" x="16" y="24" width="70" height="70"/>
+                                            <rect key="frame" x="16" y="23" width="71.5" height="71.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="75" id="747-Ej-wjc"/>
                                                 <constraint firstAttribute="width" constant="70" id="Y6f-v7-dRP"/>
@@ -146,13 +146,13 @@
                                             </variation>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vIC-Lk-8p1" userLabel="Name Label">
-                                            <rect key="frame" x="94" y="28" width="490" height="20"/>
+                                            <rect key="frame" x="95" y="27" width="488.5" height="19.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OlW-Zu-J7s" userLabel="Email Label">
-                                            <rect key="frame" x="94" y="50" width="490" height="17"/>
+                                            <rect key="frame" x="95" y="49" width="488.5" height="17"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" red="0.29803921568627451" green="0.29803921568627451" blue="0.29803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -174,11 +174,13 @@
                                     <constraints>
                                         <constraint firstItem="QU3-iq-kqm" firstAttribute="top" secondItem="Hfp-PC-nzh" secondAttribute="topMargin" id="0wD-Zg-u2Q"/>
                                         <constraint firstItem="OlW-Zu-J7s" firstAttribute="top" secondItem="vIC-Lk-8p1" secondAttribute="bottom" constant="2" id="1Ox-T4-ogq"/>
+                                        <constraint firstItem="lXo-VM-9tp" firstAttribute="top" secondItem="Hfp-PC-nzh" secondAttribute="top" constant="23" id="3l2-xH-iRD"/>
                                         <constraint firstItem="lXo-VM-9tp" firstAttribute="top" secondItem="Noj-UX-hsV" secondAttribute="bottom" constant="2" id="5EU-SI-Z3E"/>
                                         <constraint firstItem="vIC-Lk-8p1" firstAttribute="leading" secondItem="lXo-VM-9tp" secondAttribute="trailing" constant="8" id="7h7-zf-kxL"/>
                                         <constraint firstItem="lXo-VM-9tp" firstAttribute="leading" secondItem="Hfp-PC-nzh" secondAttribute="leadingMargin" constant="8" id="7hJ-XN-BTL"/>
                                         <constraint firstItem="vIC-Lk-8p1" firstAttribute="top" secondItem="lXo-VM-9tp" secondAttribute="top" constant="4" id="Qdw-Hz-F64"/>
                                         <constraint firstItem="QU3-iq-kqm" firstAttribute="leading" secondItem="Hfp-PC-nzh" secondAttribute="leadingMargin" id="VUa-Wc-LCY"/>
+                                        <constraint firstItem="lXo-VM-9tp" firstAttribute="top" secondItem="Noj-UX-hsV" secondAttribute="bottom" constant="1.5" id="YMB-1r-X7r"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="QU3-iq-kqm" secondAttribute="bottom" id="bbJ-fl-7wB"/>
                                         <constraint firstItem="vIC-Lk-8p1" firstAttribute="leading" secondItem="OlW-Zu-J7s" secondAttribute="leading" id="lbX-Bh-1c1"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="lXo-VM-9tp" secondAttribute="bottom" id="nw7-yM-ric"/>
@@ -188,6 +190,12 @@
                                         <constraint firstAttribute="centerX" secondItem="Noj-UX-hsV" secondAttribute="centerX" id="yfl-WV-gEv"/>
                                         <constraint firstItem="Noj-UX-hsV" firstAttribute="top" secondItem="Hfp-PC-nzh" secondAttribute="topMargin" id="ygI-Tl-CjE"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="3l2-xH-iRD"/>
+                                            <exclude reference="5EU-SI-Z3E"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avatarImageView" destination="lXo-VM-9tp" id="tsX-FI-YLn"/>
@@ -233,6 +241,7 @@
                 <customObject id="O5k-vV-HrC" customClass="EXManager"/>
                 <customObject id="3Wj-Xa-czo" customClass="DCMonitorProvider">
                     <connections>
+                        <outlet property="delegate" destination="x5T-no-4SV" id="lvy-Oi-lnq"/>
                         <outlet property="manager" destination="O5k-vV-HrC" id="BGK-gW-CKa"/>
                     </connections>
                 </customObject>

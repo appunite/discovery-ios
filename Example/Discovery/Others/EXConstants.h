@@ -8,7 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+// urls
 extern NSString * const EXSocketURL;
+
+// uuid
 extern NSString * const EXServiceUUIDKey;
 extern NSString * const EXCharacteristicUUIDKey;
+
+// keys
 extern NSString * const EXUserUUIDKey;
+extern NSString * const EXUserNameKey;
+extern NSString * const EXUserEmailKey;

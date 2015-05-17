@@ -8,7 +8,9 @@
 
 #import "EXConstants.h"
 
-NSString * const EXSocketURL = @"ws://discovery.io/1/2";
+NSString * const EXSocketURL = @"ws://192.168.1.115:8888/chat";
 NSString * const EXServiceUUIDKey = @"689D5F89-8003-4F1F-9C35-21D615C87E6A";
 NSString * const EXCharacteristicUUIDKey = @"8E6D7A6B-BF18-4A77-AEEF-E04B9D1265C2";
-NSString * const EXUserUUIDKey = @"309B0F00-AD18-4E4B-AC82-178CE4565BB5";
+NSString * const EXUserUUIDKey = @"EXUserUUIDKey";
+NSString * const EXUserNameKey = @"EXUserNameKey";
+NSString * const EXUserEmailKey = @"EXUserEmailKey";
