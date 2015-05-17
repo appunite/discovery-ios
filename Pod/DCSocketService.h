@@ -30,12 +30,9 @@
 // web socket
 @property (nonatomic, strong, readonly) SRWebSocket *webSocket;
 
-//
-+ (instancetype)sharedService;
-
 // sockets
-- (void)openSocketWithURL:(NSURL *)url;
-- (void)closeSocket;
+- (void)openConnectionWithURL:(NSURL *)url;
+- (void)closeConnection;
 
 // 
 - (void)subscribeUsers:(NSSet *)users;
@@ -45,21 +42,17 @@
 @end
 
 @protocol DCSocketServiceDelegate <NSObject>
+@optional
 // socket
-- (void)controllerDidOpenSocketConnection:(DCSocketService *)controller;
-- (void)controllerDidCloseSocketConnection:(DCSocketService *)controller;
-- (void)controller:(DCSocketService *)controller socketDidFailWithError:(NSError *)error;
-
-// subscribe/unsubscribe to user in range
-- (void)controller:(DCSocketService *)controller didSubscribeToUser:(NSUUID *)user;
-- (void)controller:(DCSocketService *)controller didUnsubscribeFromUser:(NSUUID *)user;
+- (void)serviceDidOpenConnection:(DCSocketService *)service;
+- (void)serviceDidCloseConnection:(DCSocketService *)service;
+- (void)service:(DCSocketService *)service didFailWithError:(NSError *)error;
 
 // metadata update
-- (void)controller:(DCSocketService *)controller didReceiveMessage:(NSDictionary *)data;
+- (void)service:(DCSocketService *)service didReceiveMessage:(NSDictionary *)data;
 @end
 
 @interface DCSocketService (Messages)
-
 //
 + (NSDictionary *)messageWithType:(NSString *)type body:(NSDictionary *)body;
 
@@ -67,7 +60,6 @@
 + (NSDictionary *)metadataMessageWithPayload:(NSDictionary *)metadata;
 + (NSDictionary *)presenceMessageForUserUUID:(NSUUID *)uuid;
 + (NSDictionary *)absenceMessageForUserUUID:(NSUUID *)uuid;
-
 @end
 
 extern NSString * const AUMessageTypePresenceKey;

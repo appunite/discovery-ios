@@ -14,15 +14,6 @@ NSString * const AUMessageTypeMetadataKey = @"metadata";
 
 @implementation DCSocketService
 
-+ (id)sharedService {
-    static DCSocketService *sharedInstance = nil;
-    static dispatch_once_t onceToken = 0;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
-    });
-    return sharedInstance;
-}
-
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -33,7 +24,7 @@ NSString * const AUMessageTypeMetadataKey = @"metadata";
     return self;
 }
 
-- (void)openSocketWithURL:(NSURL *)url {
+- (void)openConnectionWithURL:(NSURL *)url {
     if (_webSocket) return;
 
     // create request based on provider URL
@@ -45,7 +36,7 @@ NSString * const AUMessageTypeMetadataKey = @"metadata";
     [_webSocket open];
 }
 
-- (void)closeSocket {
+- (void)closeConnection {
     // close socket
     [_webSocket close];
 }
@@ -82,21 +73,11 @@ NSString * const AUMessageTypeMetadataKey = @"metadata";
 - (void)identityMonitor:(DCBluetoothMonitor *)monitor didRegiserUser:(NSUUID *)user {
     // send `presence` message
     [self sendMessage:[[self class] presenceMessageForUserUUID:user]];
-
-    // forward delegate
-    if ([_delegate respondsToSelector:@selector(controller:didSubscribeToUser:)]) {
-        [_delegate controller:self didSubscribeToUser:user];
-    }
 }
 
 - (void)identityMonitor:(DCBluetoothMonitor *)monitor didUnregiserUser:(NSUUID *)user {
     // send `absence` message
     [self sendMessage:[[self class] absenceMessageForUserUUID:user]];
-
-    // forward delegate
-    if ([_delegate respondsToSelector:@selector(controller:didUnsubscribeFromUser:)]) {
-        [_delegate controller:self didUnsubscribeFromUser:user];
-    }
 }
 
 #pragma mark -
@@ -111,15 +92,15 @@ NSString * const AUMessageTypeMetadataKey = @"metadata";
     NSDictionary *message = [_messageSerializer serializeMessage:response error:nil];
     
     // forward delegate
-    if ([_delegate respondsToSelector:@selector(controller:didReceiveMessage:)]) {
-        [_delegate controller:self didReceiveMessage:message];
+    if ([_delegate respondsToSelector:@selector(service:didReceiveMessage:)]) {
+        [_delegate service:self didReceiveMessage:message];
     }
 }
 
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket {
     // forward delegate
-    if ([_delegate respondsToSelector:@selector(controllerDidOpenSocketConnection:)]) {
-        [_delegate controllerDidOpenSocketConnection:self];
+    if ([_delegate respondsToSelector:@selector(serviceDidOpenConnection:)]) {
+        [_delegate serviceDidOpenConnection:self];
     }
 }
 
@@ -128,8 +109,8 @@ NSString * const AUMessageTypeMetadataKey = @"metadata";
     _webSocket = nil;
 
     // forward delegate
-    if ([_delegate respondsToSelector:@selector(controllerDidOpenSocketConnection:)]) {
-        [_delegate controllerDidCloseSocketConnection:self];
+    if ([_delegate respondsToSelector:@selector(serviceDidCloseConnection:)]) {
+        [_delegate serviceDidCloseConnection:self];
     }
 }
 
@@ -138,8 +119,8 @@ NSString * const AUMessageTypeMetadataKey = @"metadata";
     _webSocket = nil;
     
     // forward delegate
-    if ([_delegate respondsToSelector:@selector(controller:socketDidFailWithError:)]) {
-        [_delegate controller:self socketDidFailWithError:error];
+    if ([_delegate respondsToSelector:@selector(service:didFailWithError:)]) {
+        [_delegate service:self didFailWithError:error];
     }
 }
 

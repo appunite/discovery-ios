@@ -56,8 +56,7 @@
 @end
 
 @protocol DCBluetoothMonitorDelegate<NSObject>
-
-//
+@optional
 - (void)identityMonitor:(DCBluetoothMonitor *)monitor didRegiserUser:(NSUUID *)user;
 - (void)identityMonitor:(DCBluetoothMonitor *)monitor didUnregiserUser:(NSUUID *)user;
 @end
