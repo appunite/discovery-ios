@@ -28,9 +28,7 @@
     [super viewWillAppear:animated];
 
     // connect if needed
-    if (_provider.manager.socketService.webSocket.readyState != SR_OPEN) {
-        [_provider.manager.socketService openSocketWithURL:[NSURL URLWithString:EXSocketURL]];
-    }
+    [_provider connect];
 }
 
 #pragma mark -

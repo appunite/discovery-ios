@@ -12,11 +12,9 @@
 		208736211AF6E21E001F73D2 /* EXProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 208736161AF6D504001F73D2 /* EXProfileViewController.m */; };
 		208736221AF6E21E001F73D2 /* EXMonitorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 208736181AF6D504001F73D2 /* EXMonitorViewController.m */; };
 		208736231AF6E21E001F73D2 /* EXUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2087361F1AF6E14B001F73D2 /* EXUserCell.m */; };
-		208736281AF6E4AA001F73D2 /* EXConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 208736271AF6E4AA001F73D2 /* EXConstants.m */; };
 		208809A81AF81E1A000DBE37 /* DCJSONMessageDeserializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 208809A51AF81E1A000DBE37 /* DCJSONMessageDeserializerTests.m */; };
 		208809A91AF81E1A000DBE37 /* DCJSONMessageSerializerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 208809A61AF81E1A000DBE37 /* DCJSONMessageSerializerTests.m */; };
 		208809AA1AF81E1A000DBE37 /* DCSocketServiceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 208809A71AF81E1A000DBE37 /* DCSocketServiceTests.m */; };
-		20BDE64D1B01285300173564 /* EXManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BDE64C1B01285300173564 /* EXManager.m */; };
 		20BDE6511B0153D900173564 /* DCMonitorProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BDE6501B0153D900173564 /* DCMonitorProvider.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -51,13 +49,9 @@
 		208736181AF6D504001F73D2 /* EXMonitorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EXMonitorViewController.m; path = Controller/EXMonitorViewController.m; sourceTree = "<group>"; };
 		2087361E1AF6E14B001F73D2 /* EXUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EXUserCell.h; path = Cell/EXUserCell.h; sourceTree = "<group>"; };
 		2087361F1AF6E14B001F73D2 /* EXUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EXUserCell.m; path = Cell/EXUserCell.m; sourceTree = "<group>"; };
-		208736261AF6E4AA001F73D2 /* EXConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EXConstants.h; path = Others/EXConstants.h; sourceTree = "<group>"; };
-		208736271AF6E4AA001F73D2 /* EXConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EXConstants.m; path = Others/EXConstants.m; sourceTree = "<group>"; };
 		208809A51AF81E1A000DBE37 /* DCJSONMessageDeserializerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCJSONMessageDeserializerTests.m; sourceTree = "<group>"; };
 		208809A61AF81E1A000DBE37 /* DCJSONMessageSerializerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCJSONMessageSerializerTests.m; sourceTree = "<group>"; };
 		208809A71AF81E1A000DBE37 /* DCSocketServiceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCSocketServiceTests.m; sourceTree = "<group>"; };
-		20BDE64B1B01285300173564 /* EXManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EXManager.h; path = Others/EXManager.h; sourceTree = "<group>"; };
-		20BDE64C1B01285300173564 /* EXManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EXManager.m; path = Others/EXManager.m; sourceTree = "<group>"; };
 		20BDE64F1B0153D900173564 /* DCMonitorProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DCMonitorProvider.h; path = Others/DCMonitorProvider.h; sourceTree = "<group>"; };
 		20BDE6501B0153D900173564 /* DCMonitorProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DCMonitorProvider.m; path = Others/DCMonitorProvider.m; sourceTree = "<group>"; };
 		277CEC549550D09482CB49F7 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -152,17 +146,6 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		208736251AF6E47B001F73D2 /* Others */ = {
-			isa = PBXGroup;
-			children = (
-				20BDE64B1B01285300173564 /* EXManager.h */,
-				20BDE64C1B01285300173564 /* EXManager.m */,
-				208736261AF6E4AA001F73D2 /* EXConstants.h */,
-				208736271AF6E4AA001F73D2 /* EXConstants.m */,
-			);
-			name = Others;
-			sourceTree = "<group>";
-		};
 		20BDE64E1B0153BE00173564 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,7 +197,6 @@
 				2087361C1AF6E12C001F73D2 /* Monitor */,
 				2087361B1AF6E126001F73D2 /* Profile */,
 				208736241AF6E474001F73D2 /* Resources */,
-				208736251AF6E47B001F73D2 /* Others */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
@@ -451,9 +433,7 @@
 				208736221AF6E21E001F73D2 /* EXMonitorViewController.m in Sources */,
 				20BDE6511B0153D900173564 /* DCMonitorProvider.m in Sources */,
 				208736211AF6E21E001F73D2 /* EXProfileViewController.m in Sources */,
-				208736281AF6E4AA001F73D2 /* EXConstants.m in Sources */,
 				208736231AF6E21E001F73D2 /* EXUserCell.m in Sources */,
-				20BDE64D1B01285300173564 /* EXManager.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

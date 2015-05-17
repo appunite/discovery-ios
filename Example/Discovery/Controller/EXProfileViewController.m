@@ -18,6 +18,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @end
 
+NSString * const EXUserNameKey = @"EXUserNameKey";
+NSString * const EXUserEmailKey = @"EXUserEmailKey";
+
 @implementation EXProfileViewController
 
 - (void)viewDidLoad {
@@ -46,7 +49,7 @@
 
     // metadata payload
     NSDictionary *metadata = @{
-        @"id": [[_manager userUUID] UUIDString],
+        @"id": [[_manager userIdentifier] UUIDString],
         @"name": self.nameTextField.text,
         @"email": self.emailTextField.text,
         @"avatar": [self avatarURLString]

@@ -9,20 +9,20 @@
 #import <Foundation/Foundation.h>
 
 //Others
-#import "EXManager.h"
-#import "EXConstants.h"
+#import "DCDiscoveryManager.h"
 
 @protocol DCMonitorProviderDelegate;
 
-@interface DCMonitorProvider : NSObject <DCSocketServiceDelegate>
+@interface DCMonitorProvider : NSObject <DCDiscoveryManagerDelegate>
 @property (nonatomic, weak) IBOutlet id<DCMonitorProviderDelegate> delegate;
 //
-@property (nonatomic, strong) IBOutlet EXManager *manager;
+@property (nonatomic, strong) DCDiscoveryManager *manager;
 
 //
 @property (nonatomic, strong) NSMutableArray *users;
 @property (nonatomic, strong) NSMutableDictionary *metadata;
 
+- (void)connect;
 @end
 
 @protocol DCMonitorProviderDelegate <NSObject>

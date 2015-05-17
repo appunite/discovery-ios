@@ -9,10 +9,9 @@
 #import <UIKit/UIKit.h>
 
 //Others
-#import "EXManager.h"
-#import "EXConstants.h"
+#import "DCDiscoveryManager.h"
 
 @interface EXProfileViewController : UIViewController
-@property (nonatomic, strong) EXManager *manager;
+@property (nonatomic, strong) DCDiscoveryManager *manager;
 @end
 

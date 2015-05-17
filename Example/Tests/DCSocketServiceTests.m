@@ -37,7 +37,7 @@
 - (void)testSocketConnectionOpening {
     // open socket with given URL
     NSURL *url = [NSURL URLWithString:@"ws://discovery.io/1/2"];
-    [_socketService openSocketWithURL:url];
+    [_socketService openConnectionWithURL:url];
 
     // verify
     XCTAssertNotNil(_socketService.webSocket);

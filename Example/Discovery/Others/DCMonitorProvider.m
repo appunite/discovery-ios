@@ -8,6 +8,7 @@
 
 #import "DCMonitorProvider.h"
 
+
 @implementation DCMonitorProvider 
 
 - (instancetype)init {
@@ -23,29 +24,45 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
   
-    // assign delegate
-    _manager.socketService.delegate = self;
+    // create socket service
+    CBUUID *service = [CBUUID UUIDWithString:@"689D5F89-8003-4F1F-9C35-21D615C87E6A"];
+    CBUUID *characteristic = [CBUUID UUIDWithString:@"8E6D7A6B-BF18-4A77-AEEF-E04B9D1265C2"];
+    NSUUID *userIdentifier = [self userUUID];
+
+    // create new manager
+    _manager = [[DCDiscoveryManager alloc] initWithService:service
+                                            characteristic:characteristic
+                                            userIdentifier:userIdentifier];
+    _manager.delegate = self;
+}
+
+- (void)connect {
+    NSURL *url = [NSURL URLWithString:@"ws://192.168.1.115:8888/chat"];
+
+    // connect if needed
+    if (_manager.socketService.webSocket.readyState != SR_OPEN) {
+        [_manager openConnectionWithURL:url];
+    }
 }
 
 #pragma mark -
-#pragma mark DCSocketServiceDelegate
+#pragma mark Private
 
-- (void)controllerDidOpenSocketConnection:(DCSocketService *)controller {
-    NSLog(@"Socket connection status: open");
+- (NSUUID *)userUUID {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *uuid = [userDefaults objectForKey:@"kUserUUIDKey"];
+    if (!uuid) {
+        uuid = [[NSUUID UUID] UUIDString];
+        [userDefaults setObject:uuid forKey:@"kUserUUIDKey"];
+    }
     
-    // register already discovered user
-    [_manager assignUsers];
+    return [[NSUUID alloc] initWithUUIDString:uuid];;
 }
 
-- (void)controllerDidCloseSocketConnection:(DCSocketService *)controller {
-    NSLog(@"Socket connection status: closed");
-}
+#pragma mark -
+#pragma mark DCDiscoveryManagerDelegate
 
-- (void)controller:(DCSocketService *)controller socketDidFailWithError:(NSError *)error {
-    NSLog(@"Socket error: %@", error.localizedDescription);
-}
-
-- (void)controller:(DCSocketService *)controller didSubscribeToUser:(NSUUID *)user {
+- (void)discoveryManager:(DCDiscoveryManager *)manager didSubscribeUser:(NSUUID *)user {
     NSLog(@"Subscribed to user: %@", [user UUIDString]);
     
     // update list of currently visible users
@@ -60,7 +77,7 @@
     }
 }
 
-- (void)controller:(DCSocketService *)controller didUnsubscribeFromUser:(NSUUID *)user {
+- (void)discoveryManager:(DCDiscoveryManager *)manager didUnsubscribeUser:(NSUUID *)user {
     NSLog(@"Unsubscribed from user: %@", [user UUIDString]);
     
     // get idex of user to delete
@@ -79,7 +96,7 @@
     }
 }
 
-- (void)controller:(DCSocketService *)controller didReceiveMessage:(NSDictionary *)data {
+- (void)discoveryManager:(DCDiscoveryManager *)manager didReceiveMessage:(NSDictionary *)data {
     // desompose response
     NSDictionary *body = data[@"body"];
     NSString *uid = body[@"id"];

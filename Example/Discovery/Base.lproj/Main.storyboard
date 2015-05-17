@@ -238,11 +238,9 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ow7-b7-Ihq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <customObject id="O5k-vV-HrC" customClass="EXManager"/>
                 <customObject id="3Wj-Xa-czo" customClass="DCMonitorProvider">
                     <connections>
                         <outlet property="delegate" destination="x5T-no-4SV" id="lvy-Oi-lnq"/>
-                        <outlet property="manager" destination="O5k-vV-HrC" id="BGK-gW-CKa"/>
                     </connections>
                 </customObject>
             </objects>
