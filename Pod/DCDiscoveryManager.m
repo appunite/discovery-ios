@@ -60,7 +60,8 @@
 
 - (DCSocketService *)socketService {
     if (!_socketService) {
-        _socketService = [[DCSocketService alloc] init];
+        NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:[_service UUIDString]];
+        _socketService = [[DCSocketService alloc] initWithService:uuid];
         _socketService.delegate = self;
     }
     return _socketService;
@@ -86,7 +87,8 @@
 
 - (void)identityMonitor:(DCBluetoothMonitor *)monitor didRegiserUser:(NSUUID *)user {
     // send `presence` message
-    [self.socketService sendMessage:[DCSocketService presenceMessageForUserUUID:user]];
+    NSDictionary *payload = [_socketService presenceMessageForUserUUID:user];
+    [self.socketService sendMessage:payload];
 
     //
     if ([_delegate respondsToSelector:@selector(discoveryManager:didSubscribeUser:)]) {
@@ -96,7 +98,8 @@
 
 - (void)identityMonitor:(DCBluetoothMonitor *)monitor didUnregiserUser:(NSUUID *)user {
     // send `absence` message
-    [self.socketService sendMessage:[DCSocketService absenceMessageForUserUUID:user]];
+    NSDictionary *payload = [_socketService absenceMessageForUserUUID:user];
+    [self.socketService sendMessage:payload];
 
     //
     if ([_delegate respondsToSelector:@selector(discoveryManager:didUnsubscribeUser:)]) {

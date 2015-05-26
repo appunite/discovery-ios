@@ -30,6 +30,9 @@
 // web socket
 @property (nonatomic, strong, readonly) SRWebSocket *webSocket;
 
+//
+- (instancetype)initWithService:(NSUUID *)service NS_DESIGNATED_INITIALIZER;
+
 // sockets
 - (void)openConnectionWithURL:(NSURL *)url;
 - (void)closeConnection;
@@ -54,12 +57,12 @@
 
 @interface DCSocketService (Messages)
 //
-+ (NSDictionary *)messageWithType:(NSString *)type body:(NSDictionary *)body;
+- (NSDictionary *)messageWithType:(NSString *)type body:(NSDictionary *)body;
 
 // predefined messages
-+ (NSDictionary *)metadataMessageWithPayload:(NSDictionary *)metadata;
-+ (NSDictionary *)presenceMessageForUserUUID:(NSUUID *)uuid;
-+ (NSDictionary *)absenceMessageForUserUUID:(NSUUID *)uuid;
+- (NSDictionary *)metadataMessageWithPayload:(NSDictionary *)metadata;
+- (NSDictionary *)presenceMessageForUserUUID:(NSUUID *)uuid;
+- (NSDictionary *)absenceMessageForUserUUID:(NSUUID *)uuid;
 @end
 
 extern NSString * const AUMessageTypePresenceKey;

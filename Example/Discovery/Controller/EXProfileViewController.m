@@ -56,7 +56,8 @@ NSString * const EXUserEmailKey = @"EXUserEmailKey";
     };
     
     // send update user metadata socket message
-    [service sendMessage:[DCSocketService messageWithType:AUMessageTypeMetadataKey body:metadata]];
+    NSDictionary *payload = [service messageWithType:AUMessageTypeMetadataKey body:metadata];
+    [service sendMessage:payload];
     
     // update avatar image view
     [self updateAvatar];

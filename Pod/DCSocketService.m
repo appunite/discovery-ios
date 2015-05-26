@@ -12,11 +12,16 @@ NSString * const AUMessageTypePresenceKey = @"presence";
 NSString * const AUMessageTypeAbsenceKey = @"absence";
 NSString * const AUMessageTypeMetadataKey = @"metadata";
 
-@implementation DCSocketService
+@implementation DCSocketService {
+    NSString *_serviceUUID;
+}
 
-- (instancetype)init {
+- (instancetype)initWithService:(NSUUID *)service {
     self = [super init];
     if (self) {
+        _serviceUUID = [service UUIDString];
+        NSParameterAssert(_serviceUUID);
+        
         // create basic serializer/deserializer
         _messageSerializer = [DCJSONMessageSerializer new];
         _messageDeserializer = [DCJSONMessageDeserializer new];
@@ -127,22 +132,22 @@ NSString * const AUMessageTypeMetadataKey = @"metadata";
 #pragma mark -
 #pragma mark Messages
 
-+ (NSDictionary *)messageWithType:(NSString *)type body:(NSDictionary *)body {
+- (NSDictionary *)messageWithType:(NSString *)type body:(NSDictionary *)body {
     NSParameterAssert(type); NSParameterAssert(body);
-    return @{@"header": @{@"id": [[NSUUID UUID] UUIDString], @"type": type}, @"body": body};
+    return @{@"header": @{@"id": [[NSUUID UUID] UUIDString], @"type": type, @"service": _serviceUUID}, @"body": body};
 }
 
-+ (NSDictionary *)metadataMessageWithPayload:(NSDictionary *)metadata {
+- (NSDictionary *)metadataMessageWithPayload:(NSDictionary *)metadata {
     NSParameterAssert(metadata);
     return [self messageWithType:AUMessageTypeMetadataKey body:metadata];
 }
 
-+ (NSDictionary *)presenceMessageForUserUUID:(NSUUID *)uuid {
+- (NSDictionary *)presenceMessageForUserUUID:(NSUUID *)uuid {
     NSParameterAssert(uuid);
     return [self messageWithType:AUMessageTypePresenceKey body:@{@"id": uuid.UUIDString}];
 }
 
-+ (NSDictionary *)absenceMessageForUserUUID:(NSUUID *)uuid {
+- (NSDictionary *)absenceMessageForUserUUID:(NSUUID *)uuid {
     NSParameterAssert(uuid);
     return [self messageWithType:AUMessageTypeAbsenceKey body:@{@"id": uuid.UUIDString}];
 }
