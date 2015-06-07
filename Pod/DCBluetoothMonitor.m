@@ -21,7 +21,7 @@
     NSMutableDictionary *_internalUsers;
 }
 
-- (instancetype)initWithServiceUUID:(CBUUID *)service characteristicUUID:(CBUUID *)characteristic {
+- (instancetype)initWithServiceUUID:(NSUUID *)service characteristicUUID:(NSUUID *)characteristic {
     self = [super init];
     if (self) {
         _timer = NO;
@@ -32,8 +32,8 @@
         _internalUsers = [NSMutableDictionary new];
         
         // assign all UUID values
-        _characteristicUUID = characteristic;
-        _serviceUUID = service;
+        _characteristicUUID = [CBUUID UUIDWithNSUUID:characteristic];
+        _serviceUUID = [CBUUID UUIDWithNSUUID:service];
 
         // start up the CBCentralManager
         _managerQueue = dispatch_queue_create("com.appunite.central.queue", DISPATCH_QUEUE_SERIAL);

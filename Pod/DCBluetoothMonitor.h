@@ -35,8 +35,8 @@
  *  @discussion Returns an initialized identity monitor.
  *
  */
-- (instancetype)initWithServiceUUID:(CBUUID *)service
-                 characteristicUUID:(CBUUID *)characteristic NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithServiceUUID:(NSUUID *)service
+                 characteristicUUID:(NSUUID *)characteristic NS_DESIGNATED_INITIALIZER;
 
 /*!
  *  @method startScanning

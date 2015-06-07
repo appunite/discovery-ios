@@ -25,8 +25,8 @@
     [super awakeFromNib];
   
     // create socket service
-    CBUUID *service = [CBUUID UUIDWithString:@"689D5F89-8003-4F1F-9C35-21D615C87E6A"];
-    CBUUID *characteristic = [CBUUID UUIDWithString:@"8E6D7A6B-BF18-4A77-AEEF-E04B9D1265C2"];
+    NSUUID *service = [[NSUUID alloc] initWithUUIDString:@"689D5F89-8003-4F1F-9C35-21D615C87E6A"];
+    NSUUID *characteristic = [[NSUUID alloc] initWithUUIDString:@"8E6D7A6B-BF18-4A77-AEEF-E04B9D1265C2"];
     NSUUID *userIdentifier = [self userUUID];
 
     // create new manager

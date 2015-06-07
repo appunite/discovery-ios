@@ -15,10 +15,10 @@
     CBMutableService *_service;
 }
 
-- (instancetype)initWithService:(CBUUID *)service characteristic:(CBUUID *)characteristic value:(NSUUID *)value {
+- (instancetype)initWithService:(NSUUID *)service characteristic:(NSUUID *)characteristic value:(NSUUID *)value {
     self = [super init];
     if (self) {
-        _uuid = service;
+        _uuid = [CBUUID UUIDWithNSUUID:service];
         
         // create manager
         _managerQueue = dispatch_queue_create("com.appunite.peripheral.queue", DISPATCH_QUEUE_SERIAL);
@@ -31,13 +31,13 @@
         uuid_t uuid; [value getUUIDBytes:uuid];
         
         // create characteristic
-        CBMutableCharacteristic *mutableCharacteristic = [[CBMutableCharacteristic alloc] initWithType:characteristic
+        CBMutableCharacteristic *mutableCharacteristic = [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithNSUUID:characteristic]
                                                                                             properties:CBCharacteristicPropertyRead
                                                                                                  value:[NSData dataWithBytes:uuid length:16]
                                                                                            permissions:CBAttributePermissionsReadable];
         
         // create service
-        _service = [[CBMutableService alloc] initWithType:service primary:YES];
+        _service = [[CBMutableService alloc] initWithType:_uuid primary:YES];
         
         // add the characteristic to the service
         _service.characteristics = @[mutableCharacteristic];

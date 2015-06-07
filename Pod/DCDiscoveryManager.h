@@ -19,8 +19,8 @@
 
 //
 @property (nonatomic, strong, readonly) NSUUID *userIdentifier;
-- (instancetype)initWithService:(CBUUID *)service
-                 characteristic:(CBUUID *)characteristic
+- (instancetype)initWithService:(NSUUID *)service
+                 characteristic:(NSUUID *)characteristic
                  userIdentifier:(NSUUID *)value NS_DESIGNATED_INITIALIZER;
 
 // sockets

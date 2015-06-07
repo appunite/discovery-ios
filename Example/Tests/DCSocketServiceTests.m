@@ -31,8 +31,8 @@
     _serviceUUID = [NSUUID UUID];
     
     // create bluetooth monitor
-    _bluetoothMonitor = [[DCBluetoothMonitor alloc] initWithServiceUUID:[CBUUID UUIDWithString:@"689D5F89-8003-4F1F-9C35-21D615C87E6A"]
-                                                   characteristicUUID:[CBUUID UUIDWithString:@"8E6D7A6B-BF18-4A77-AEEF-E04B9D1265C2"]];
+    _bluetoothMonitor = [[DCBluetoothMonitor alloc] initWithServiceUUID:[[NSUUID alloc] initWithUUIDString:@"689D5F89-8003-4F1F-9C35-21D615C87E6A"]
+                                                   characteristicUUID:[[NSUUID alloc] initWithUUIDString:@"8E6D7A6B-BF18-4A77-AEEF-E04B9D1265C2"]];
 
     // create socket service
     _socketService = [[DCSocketService alloc] initWithService:_serviceUUID];

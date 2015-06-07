@@ -28,8 +28,8 @@ extern NSString * const DCBluetoothEmitterRestoreIdentifierKey;
  *              service to peripherial manager based on provided data.
  *
  */
-- (instancetype)initWithService:(CBUUID *)service
-                 characteristic:(CBUUID *)characteristic
+- (instancetype)initWithService:(NSUUID *)service
+                 characteristic:(NSUUID *)characteristic
                           value:(NSUUID *)value NS_DESIGNATED_INITIALIZER;
 
 /*!

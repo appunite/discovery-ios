@@ -19,12 +19,12 @@
 @synthesize bluetoothMonitor = _bluetoothMonitor;
 @synthesize bluetoothEmitter = _bluetoothEmitter;
 
-- (instancetype)initWithService:(CBUUID *)service characteristic:(CBUUID *)characteristic userIdentifier:(NSUUID *)value {
+- (instancetype)initWithService:(NSUUID *)service characteristic:(NSUUID *)characteristic userIdentifier:(NSUUID *)value {
     self = [super init];
     if (self) {
         // assign identifiers
-        _service = service;
-        _characteristic = characteristic;
+        _service = [CBUUID UUIDWithNSUUID:service];
+        _characteristic = [CBUUID UUIDWithNSUUID:characteristic];
         _userIdentifier = value;
     }
     return self;
